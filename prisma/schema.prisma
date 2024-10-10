@@ -1,0 +1,67 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// criando o modelo de configurações do usuario, com seu id e a moeda de sua preferencia
+model ConfiguracoesUser {
+  userId String @id 
+  moeda String
+}
+
+// criando o modelo cateogria, com nome, icone e tipo da categoria
+// a categoria tera um constraint que so deixara o user com userId especifico criar uma categoria com mesmo nome e tipo, sem duplicatas
+model Categoria {
+  criadoEm DateTime @default(now())
+  nome String
+  userId String
+  icone String
+  tipo String @default("entrada")
+
+  @@unique([nome, userId, tipo])
+}
+
+// criando o modelo transacao, que tera um id gerado pelo prisma, datas de criacao e atualizacao, valor da transacao, sua descricao, data, id do usuario que fez a transacao
+// tipo da transacao, categoria da transacao (+icone)
+model Transacao {
+  id String @id @default(uuid())
+  criadoEm DateTime @default(now())
+  atualizadoEm DateTime @default(now())
+
+  valor Float
+  descricao String
+  data DateTime
+  userId String
+  tipo String @default("entrada")
+
+  categoria String
+  iconeCategoria String
+
+}
+
+model HistoricoMes {
+  userId String
+  dia Int
+  mes Int
+  ano Int 
+  entrada Float
+  saida Float
+
+  @@id([dia, mes, ano, userId])
+}
+
+model HistoricoAno {
+  userId String
+  mes Int
+  ano Int 
+  entrada Float
+  saida Float
+
+  @@id([mes, ano, userId])
+}

@@ -13,19 +13,19 @@ import { SheetContent, SheetTrigger, Sheet } from './ui/sheet'
 const Navbar = () => {
   return (
     <>
-        <DesktopNavbar />
+        <DesktopNavbar /> {/* definindo versão da navbar para desktop e mobile */}
         <MobileNavbar />
     </>
   )
 }
 
-const items = [
+const items = [ // criando os itens da navbar, adicionando rotas e labels para cada um
     {label: "Dashboard", link: "/"}, 
     {label: "Transações", link: "/transacoes"},
     {label: "Gerenciamento", link: "/gerenciamento"},
 ]
 
-function DesktopNavbar() {
+function DesktopNavbar() { // função para navbar de desktop, que ficará hidden até o breakpoint md
     return (
         <div className="hidden border-separte border-b bg-background md:block">
             <nav className="mx-auto container flex items-center justify-between px-8">
@@ -38,7 +38,7 @@ function DesktopNavbar() {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <ThemeSwitcherBtn />
+                    <ThemeSwitcherBtn /> {/* passando o componente de botão para mudar o tema e o UserButton do clerk para logout */}
                     <UserButton/>
                 </div>
             </nav>
@@ -50,9 +50,9 @@ function MobileNavbar() {
     const [isOpen, setIsOpen] = useState(false); // criando um estado para controlar se o menu está aberto ou fechado
 
     return (
-        <div className="block border-separate bg-background md:hidden">
+        <div className="block border-separate bg-background md:hidden"> {/* A navbar para mobile ficará escondida a partir do breakpoint md */}
             <nav className="container flex items-center justify-between px-8">
-                <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}> {/* usando o componente sheet para o menu lateral -> quando aberto, chamará a função setIsOpen */}
                     <SheetTrigger asChild>
                         <Button variant={"ghost"} size={"icon"}>
                             <Menu />
@@ -60,9 +60,9 @@ function MobileNavbar() {
                     </SheetTrigger>
                     <SheetContent className="w-[400px] sm:w-[540px]" side="left">
                         <Logo />
-                        <div className="flex flex-col gap-1 pt-4">
-                            {items.map(item => (
-                                <NavbarItem key={item.label} label={item.label} link={item.link} onClick={() => setIsOpen((prev)=> !prev)}/>
+                        <div className="flex flex-col gap-1 pt-4"> 
+                            {items.map(item => ( // quando o menu for aberto, isOpen mudará de estado para o estado oposto (se for aberta, sairá de falso para verdadeiro)
+                                <NavbarItem key={item.label} label={item.label} link={item.link} onClick={() => setIsOpen((prev)=> !prev)}/> 
                             ))}
                         </div>
                     </SheetContent>
