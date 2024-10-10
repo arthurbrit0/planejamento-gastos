@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={ptBR}>
+    <ClerkProvider localization={ptBR} afterSignOutUrl="/login">
       <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <RootProviders>{children}</RootProviders>
