@@ -21,26 +21,27 @@ import { toast } from "sonner";
 import { useTheme } from "next-themes";
 
 interface Props {
-    tipo: TipoTransacao,
-    onSuccessCallback: (categoria: Categoria) => void;
+    tipo: TipoTransacao,                                // definindo os tipos das props que serão recebidas pelo dialogo de criar categoria 
+    onSuccessCallback: (categoria: Categoria) => void; // definimos uma função de sucesso que será chamada quando a categoria for criada. essa função definirá o valor atual da
+                                                      // categoria selecionada no popover no state value e fechará o dialogo.
 };
 
 function DialogoCriarCategoria({tipo, onSuccessCallback }: Props) {
 
-    const [open, setOpen] = React.useState(false);
-    const form = useForm<CriarCategoriaSchemaTipo>({
-        resolver: zodResolver(CriarCategoriaSchema),
+    const [open, setOpen] = React.useState(false);    // state para ver se o dialogo esta aberto ou fechado
+    const form = useForm<CriarCategoriaSchemaTipo>({ // usamos o hook useForm para criar um formulário tipado com o schema de validação CriarCategoriaSchemaTipo
+        resolver: zodResolver(CriarCategoriaSchema), // usamos o zod, passando o schema de validação para validar os dados do formulário
         defaultValues: {
-            tipo,
-        }
+            tipo 
+        }                                           // definimos o valor default do campo tipo do formulário como o tipo passado como prop
     });
 
-    const queryClient = useQueryClient();
-    const tema = useTheme();
+    const queryClient = useQueryClient();           // hook para acessar o queryClient
+    const tema = useTheme();                        // hook para acessar o tema atual do app
 
-    const {mutate, isPending} = useMutation({
-        mutationFn: CriarCategoria,
-        onSuccess: async (data: Categoria) => {
+    const {mutate, isPending} = useMutation({       // hook do React Query para alterar a categora no banco de dados, retornando a função para alterar e o estado isPending para ver se a mutação está pendente
+        mutationFn: CriarCategoria,                 // passamos como função de mutação a função CriarCategoria, que basicamente valida o corpo da requisição e cria a categoria no banco de dados
+        onSuccess: async (data: Categoria) => {     // a função onSuccess é chamada quando a mutação é bem sucedida, resetando o formulário e mostrando um toast de sucesso
             form.reset({
                 nome: "",
                 icone: "",
@@ -48,16 +49,16 @@ function DialogoCriarCategoria({tipo, onSuccessCallback }: Props) {
             });
 
             toast.success(`Categoria ${data.nome} criada com sucesso!`, {
-                id: "criar-categoria",
+                id: "criar-categoria",              // esse id é usado para identificar o toast e evitar que ele seja duplicado
             });
 
-            onSuccessCallback(data);
+            onSuccessCallback(data);                // depois que a categoria for criada, chamamos a função de sucesso passada como prop, setando o valor de value como o da categoriar criada e fechando o popover
 
-            await queryClient.invalidateQueries({
-                queryKey: ["categorias"],
+            await queryClient.invalidateQueries({   // depois que fizermos a mutação, iremos invalidar a query de categorias, para que ela seja refeita e a categoria criada seja mostrada de forma atualizada
+                queryKey: ["categorias"],           // ou seja, a nova categoria criada pelo usuario aparecera na lista de categorias automaticamente após ser criada
             });
 
-            setOpen((prev)=> !prev);
+            setOpen((prev)=> !prev);                // depois de criarmos a categoria, fecharemos o popover
         },
         onError: () => {
             toast.error("Algo deu errado!", {
@@ -66,12 +67,12 @@ function DialogoCriarCategoria({tipo, onSuccessCallback }: Props) {
         }
     });
 
-    const onSubmit = useCallback((values: CriarCategoriaSchemaTipo) => {
+    const onSubmit = useCallback((values: CriarCategoriaSchemaTipo) => {    // quando enviarmos o formulário, mostraremos um toast de loading e chamaremos a função de mutação
         toast.loading("Criando categoria...", {
             id: "criar-categoria",
         });
 
-        mutate(values);
+        mutate(values);                             // a função mutate receberá como parâmetros os valores do formulário  
     }, [mutate]);
 
 

@@ -39,12 +39,12 @@ function DialogoCriarTransacao({trigger, tipo}: Props) {
     })
 
     const handleCategoria = useCallback((categoria: string) => {
-        form.setValue("categoria", categoria)
-    }, [form]);
+        form.setValue("categoria", categoria) // função que recebe uma categoria e setea o valor do campo categoria do formulario com essa categoria passada    
+    }, [form]);  // usando o useCallback, evitamos que a função seja recriada a cada renderização do componente, só sendo recriada quando o form for atualizado
     
 
-    return (
-        <Dialog>
+    return ( // o trigger será, no nosso caso, um botão na página de dashboard, que, quando clicado, servirá como trigger para abrir o diálogo
+        <Dialog> 
             <DialogTrigger asChild>
                 {trigger} 
             </DialogTrigger>
@@ -52,7 +52,7 @@ function DialogoCriarTransacao({trigger, tipo}: Props) {
                 <DialogHeader>
                     <DialogTitle>
                     <span>
-                        Criar uma operação de{" "}
+                        Criar uma operação de{" "} {/* renderizando o título do dialogo, dependendo do tipo de categoria que for passada como prop */}
                         <span className={cn("m-1", tipo === "entrada" ? "text-emerald-500" : "text-rose-500")}>
                         {tipo}
                         </span>
