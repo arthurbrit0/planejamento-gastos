@@ -1,3 +1,5 @@
+import { Moedas } from "./moedas";
+
 export function DataToUTCDate(data: Date) {
     return new Date(                        // função que retorna uma nova data em formato utc
         Date.UTC(
@@ -10,4 +12,13 @@ export function DataToUTCDate(data: Date) {
             data.getUTCMilliseconds(),
         )
     );
+}
+
+export function GetFormatterMoeda(moeda: string) {
+    const locale = Moedas.find(m => m.value === moeda)?.locale
+
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: moeda,
+    });
 }

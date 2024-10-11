@@ -51,7 +51,7 @@ const page = async () => {
           </div>
         </div>
       </div>
-      <Overview userSettings={configuracoesUsuario} /> 
+      <Overview configuracoesUser={configuracoesUsuario} /> 
     </div>
   )
 }
