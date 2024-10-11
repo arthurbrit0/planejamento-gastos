@@ -4,6 +4,7 @@ import React from 'react'
 import prisma from '@/lib/prisma';
 import { Button } from '@/components/ui/button';
 import DialogoCriarTransacao from './_components/DialogoCriarTransacao';
+import Overview from './_components/Overview';
 
 const page = async () => {
   const usuarioAtual = await currentUser(); // pegamos as informações do usuario logado
@@ -50,6 +51,7 @@ const page = async () => {
           </div>
         </div>
       </div>
+      <Overview userSettings={configuracoesUsuario} /> 
     </div>
   )
 }
