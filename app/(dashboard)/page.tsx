@@ -5,6 +5,7 @@ import prisma from '@/lib/prisma';
 import { Button } from '@/components/ui/button';
 import DialogoCriarTransacao from './_components/DialogoCriarTransacao';
 import Overview from './_components/Overview';
+import Historico from './_components/Historico';
 
 const page = async () => {
   const usuarioAtual = await currentUser(); // pegamos as informações do usuario logado
@@ -51,7 +52,10 @@ const page = async () => {
           </div>
         </div>
       </div>
-      <Overview configuracoesUser={configuracoesUsuario} /> 
+      <Overview configuracoesUser={configuracoesUsuario} />
+      <div className="container mx-auto">
+        <Historico configuracoesUser={configuracoesUsuario} /> 
+      </div>
     </div>
   )
 }
