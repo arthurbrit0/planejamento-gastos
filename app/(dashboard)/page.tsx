@@ -25,7 +25,7 @@ const page = async () => {
   return (
     <div className="h-full bg-background">
       <div className="border-b bg-card">
-        <div className="container flex flex-wrap items-center justify-center gap-6 py-8">
+        <div className="container flex flex-wrap items-center justify-center gap-6 py-8 mx-auto">
           <p className="text-3xl font-bold">
             Olá, {usuarioAtual.firstName}! 
           </p>
