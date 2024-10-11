@@ -41,7 +41,7 @@ const page = async () => { // aqui a função é async pois iremos utilizar a fu
         </Card>
         <Separator />
         <Button className="w-full" asChild>
-            <Link href="/dashboard">Ir para o dashboard</Link>
+            <Link href="/">Ir para o dashboard</Link>
         </Button>
         <div className="mt-8">
             <Logo />

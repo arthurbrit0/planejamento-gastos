@@ -98,15 +98,15 @@ export function MoedaBox() { // função importada do shadcn ui (Combobox), que 
 
   if (isDesktop) {
     return (
-      <SkeletonWrapper isLoading={configuracoesUser.isFetching}>
+      <SkeletonWrapper isLoading={configuracoesUser.isFetching}> {/* isLoading será passado como props para o componente SkeletonWrapper, que, no caso, será o isFetching do configuracoesUser */}
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="justify-start w-full" disabled={mutation.isPending}>
+            <Button variant="outline" className="justify-start w-full" disabled={mutation.isPending}> {/* Quando o usuário estiver mudando a moeda, ou seja, o mutation estiver mudando a moeda no BDD, o isPending será true, e o botão será desativado*/}
               {selectedOption ? <>{selectedOption.label}</> : <>+ Definir moeda</>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0" align="start">
-            <OptionList setOpen={setOpen} setSelectedOption={selecionarOpcao} />
+            <OptionList setOpen={setOpen} setSelectedOption={selecionarOpcao} /> {/* setSelectedOption do OptionList será a função que criamos para selecionar a moeda atual, que muda o valor da moeda no BDD */}
           </PopoverContent>
         </Popover>
       </SkeletonWrapper>
@@ -132,7 +132,7 @@ export function MoedaBox() { // função importada do shadcn ui (Combobox), que 
 }
 
 function OptionList({
-  setOpen,
+  setOpen, // o componente OptionList recebe dois props, o setOpen e o setSelectedOption
   setSelectedOption,
 }: {
   setOpen: (open: boolean) => void
@@ -150,7 +150,7 @@ function OptionList({
               value={moeda.value}
               onSelect={(value) => {
                 setSelectedOption(
-                  Moedas.find((priority) => priority.value === value) || null
+                  Moedas.find((m) => m.value === value) || null
                 )
                 setOpen(false)
               }}
