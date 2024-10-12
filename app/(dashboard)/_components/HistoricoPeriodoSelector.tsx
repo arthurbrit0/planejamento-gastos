@@ -19,15 +19,15 @@ function HistoricoPeriodoSelector({periodo, setPeriodo, calendario, setCalendari
 
     const periodos = useQuery<GetPeriodosResponseType>({                                     // fazemos uma consulta ao banco de dados, que retornará um array com os anos que o usuario tem transações
         queryKey: ['overview', 'periodos', 'historico'],
-        queryFn: () => fetch('/api/historico').then(res => res.json())
+        queryFn: () => fetch('/api/historico').then(res => res.json())                       // essa função retorna os anos que o usuario tem transações, para serem usados no seletor de periodo
     })
 
   return (
     <div className="flex flex-wrap items-center gap-4">
       <SkeletonWrapper isLoading={periodos.isFetching} fullWidth={false}>
-        <Tabs value={calendario} onValueChange={value => setCalendario(value as Calendario)}>
+        <Tabs value={calendario} onValueChange={value => setCalendario(value as Calendario)}> {/* O componente Tabs será usado para mostrar os TabsTrigger para alternar entre os calendários de ano e mês */}
             <TabsList>
-                <TabsTrigger value="ano">Ano</TabsTrigger>
+                <TabsTrigger value="ano">Ano</TabsTrigger>                                     {/* O componente TabsTrigger será usado para alternar entre os calendários de ano e mês */}
                 <TabsTrigger value="mes">Mês</TabsTrigger>
             </TabsList>
         </Tabs>
@@ -39,6 +39,7 @@ function HistoricoPeriodoSelector({periodo, setPeriodo, calendario, setCalendari
         </SkeletonWrapper>
         {calendario === "mes" && (
         <SkeletonWrapper isLoading={periodos.isFetching} fullWidth={false}>
+            {/* O componente seletor mes será o seletor apenas do mes, o ano continuará igual */}
             <SeletorMes periodo={periodo} setPeriodo={setPeriodo} />
         </SkeletonWrapper>
         )}
@@ -49,14 +50,14 @@ function HistoricoPeriodoSelector({periodo, setPeriodo, calendario, setCalendari
 
 export default HistoricoPeriodoSelector
 
-function SeletorAno({periodo, setPeriodo, anos}: {
+function SeletorAno({periodo, setPeriodo, anos}: { // o seletor do ano tera como props o periodo, setPeriodo e o array de anos que tem transações do usuario
         periodo: Periodo,
         setPeriodo: (periodo: Periodo) => void,
         anos: GetPeriodosResponseType
     }) {
         return (
-            <Select value={periodo.ano.toString()} onValueChange={value => setPeriodo({
-                mes: periodo.mes,
+            <Select value={periodo.ano.toString()} onValueChange={value => setPeriodo({ // o select tera como valor inicial o ano atual do periodo, e quando selecionarmos outra opcao, chamaremos a funcao setPeriodo
+                mes: periodo.mes,                                                       // setaremos o periodo como o ano selecionado e o mes atual  
                 ano: parseInt(value)})}>
                     <SelectTrigger className="w-[180px]">
                         <SelectValue />

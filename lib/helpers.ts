@@ -15,9 +15,9 @@ export function DataToUTCDate(data: Date) {
 }
 
 export function GetFormatterMoeda(moeda: string) {
-    const locale = Moedas.find(m => m.value === moeda)?.locale
+    const locale = Moedas.find(m => m.value === moeda)?.locale  // pegando o locale do tipo de moeda passado
 
-    return new Intl.NumberFormat(locale, {
+    return new Intl.NumberFormat(locale, {                      // formatando o valor da moeda para ser exibido nos cards de estatísticas de acordo com o locale da moeda
         style: 'currency',
         currency: moeda,
     });

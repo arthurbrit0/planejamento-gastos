@@ -34,15 +34,15 @@ function Historico({configuracoesUser}: {configuracoesUser: ConfiguracoesUser}) 
         return GetFormatterMoeda(configuracoesUser.moeda)                         // essa função formatará o valor da moeda do usuário, para ser exibido nos cards de estatísticas
     }, [configuracoesUser.moeda]);
 
-    const historicoDadosQuery = useQuery<GetHistoricoDadosResponseType>({
-        queryKey: ['overview', 'historico', calendario, periodo],
+    const historicoDadosQuery = useQuery<GetHistoricoDadosResponseType>({         // usando o hook useQuery para buscar os dados do histórico
+        queryKey: ['overview', 'historico', calendario, periodo],                 // passamos a chave da query, que é um array com o tipo da query, o calendario e o periodo
         queryFn: async () => {
-            const res = await fetch(`/api/historico-data?calendario=${calendario}&mes=${periodo.mes}&ano=${periodo.ano}`);
-            if (!res.ok) {
+            const res = await fetch(`/api/historico-data?calendario=${calendario}&mes=${periodo.mes}&ano=${periodo.ano}`);  // a query fara uma chamada a api passsando os parametros de query
+            if (!res.ok) {                                                                                                  // calendario, mes e ano do periodo passado. inicialmente, esse período tem o mes e o ano atuais
                 throw new Error('Erro ao buscar dados');
             }
-            return res.json();
-        }
+            return res.json();                                                    // retornamos os dados da resposta, com o historico do periodo passado, sendo essa resposta um array de objetos com saida e entrada
+        }                                                                         // de cada dia do mes ou de cada mes do ano, dependendo do calendario passado
     })
 
     const dadosDisponiveis = historicoDadosQuery.data && historicoDadosQuery.data.length > 0;                
@@ -53,7 +53,7 @@ function Historico({configuracoesUser}: {configuracoesUser: ConfiguracoesUser}) 
       <Card className="mt-12 text-3xl font-bold">
         <CardHeader className="gap-2">
             <CardTitle className="grid grid-flow-row justify-between gap-2 md:grid-flow-col">
-                {/* O componente HistoricoPeriodoSelector mostrará os gráficos de cada mês do período escolhido */}
+                {/* O componente HistoricoPeriodoSelector mostrará um seletor de periodos, além de um seletor de tipo de calendario */}
                 <HistoricoPeriodoSelector periodo={periodo} setPeriodo={setPeriodo} calendario={calendario} setCalendario={setCalendario}/>	
                 <div className="flex h-10 gap-2">
                     <Badge variant={"outline"} className="flex items-center gap-2 text-sm">
@@ -141,7 +141,7 @@ function CustomTooltip({active, payload, formatter}: any) {
         <div className="min-w-[300px] rounded border bg-background p-4">
             <TooltipRow formatter={formatter} label="Saida" value={saida} bgColor="bg-red-500" textColor="text-red-500" />
             <TooltipRow formatter={formatter} label="Entrada" value={entrada} bgColor="bg-emerald-500" textColor="text-emerald-500" />
-            <TooltipRow formatter={formatter} label="saldo" value={entrada-saida} bgColor="bg-gray-100" textColor="text-foreground" />
+            <TooltipRow formatter={formatter} label="Saldo" value={entrada-saida} bgColor="bg-gray-100" textColor="text-foreground" />
         </div>
     )
 }
