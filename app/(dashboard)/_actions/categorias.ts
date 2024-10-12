@@ -1,6 +1,6 @@
 "use server";
 
-import { CriarCategoriaSchema, CriarCategoriaSchemaTipo } from "@/schema/categorias";
+import { CriarCategoriaSchema, CriarCategoriaSchemaTipo, DeletarCategoriaSchema, DeletarCategoriaSchemaTipo } from "@/schema/categorias";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
@@ -25,4 +25,26 @@ export async function CriarCategoria(form: CriarCategoriaSchemaTipo) {
             tipo,
         }
     });
+}
+
+export async function DeletarCategoria(form: DeletarCategoriaSchemaTipo) {
+    const parsedBody = DeletarCategoriaSchema.safeParse(form); // validando o corpo da requisição com o schema de validação que criamos usando Zod
+    if(!parsedBody.success) {
+        throw new Error("Erro ao criar categoria");
+    }
+
+    const user = await currentUser();
+    if(!user) {
+        redirect("/login");
+    }
+
+    return await prisma.categoria.delete({
+        where: {
+            nome_userId_tipo: {
+                userId: user.id,
+                nome: parsedBody.data.nome,
+                tipo: parsedBody.data.tipo,
+            }
+        }
+    })
 }

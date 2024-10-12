@@ -2,7 +2,7 @@
 
 import { TipoTransacao } from "@/lib/tipos";
 import { CriarCategoriaSchemaTipo, CriarCategoriaSchema } from "@/schema/categorias";
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
@@ -23,10 +23,10 @@ import { useTheme } from "next-themes";
 interface Props {
     tipo: TipoTransacao,                                // definindo os tipos das props que serão recebidas pelo dialogo de criar categoria 
     onSuccessCallback: (categoria: Categoria) => void; // definimos uma função de sucesso que será chamada quando a categoria for criada. essa função definirá o valor atual da
-                                                      // categoria selecionada no popover no state value e fechará o dialogo.
+    trigger?: ReactNode                                // categoria selecionada no popover no state value e fechará o dialogo.
 };
 
-function DialogoCriarCategoria({tipo, onSuccessCallback }: Props) {
+function DialogoCriarCategoria({tipo, onSuccessCallback, trigger }: Props) {
 
     const [open, setOpen] = React.useState(false);    // state para ver se o dialogo esta aberto ou fechado
     const form = useForm<CriarCategoriaSchemaTipo>({ // usamos o hook useForm para criar um formulário tipado com o schema de validação CriarCategoriaSchemaTipo
@@ -78,10 +78,10 @@ function DialogoCriarCategoria({tipo, onSuccessCallback }: Props) {
 
     return <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-            <Button variant={"ghost"} className="flex border-separate items-center justify-start rounded-none border-b px-3 py-3 text-muted-foreground">
+            { trigger ? trigger : <Button variant={"ghost"} className="flex border-separate items-center justify-start rounded-none border-b px-3 py-3 text-muted-foreground">
                 <PlusSquareIcon size={24} className="mr-2 h-4 w-4" />
                 Criar nova
-            </Button>
+            </Button> }
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>
