@@ -17,7 +17,7 @@ function TransacoesPage() {
   return (
     <>
         <div className="border-b bd-card">
-        <div className="container flex flex-wrap items-center justify-between gap-6 py-8 mx-auto">
+        <div className="container flex flex-wrap items-center justify-between gap-6 py-8 px-8 mx-auto">
             <div>
                 <p className="text-3xl font-bold">
                     Histórico de transações
@@ -40,7 +40,7 @@ function TransacoesPage() {
                     />
         </div>
         </div>
-        <div className="container mx-auto">
+        <div className="container mx-auto px-8">
             <TabelaTransacoes from={rangeData.from} to={rangeData.to}></TabelaTransacoes>
         </div>
     </>
