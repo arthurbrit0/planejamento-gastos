@@ -33,7 +33,7 @@ function HistoricoPeriodoSelector({periodo, setPeriodo, calendario, setCalendari
         </Tabs>
       </SkeletonWrapper>
       <div className="flex flex-wrap items-center gap-2">
-        <SkeletonWrapper isLoading={periodos.isFetching}>
+        <SkeletonWrapper isLoading={periodos.isFetching} fullWidth={false}>
             {/* O componente seletor ano será o seletor apenas do ano, o mês continuará igual */}
             <SeletorAno periodo={periodo} setPeriodo={setPeriodo} anos={periodos.data || []} />
         </SkeletonWrapper>
