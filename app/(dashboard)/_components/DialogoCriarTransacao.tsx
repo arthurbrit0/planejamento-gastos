@@ -22,7 +22,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CriarTransacao } from "../_actions/transacoes";
 import { toast } from "sonner";
-import { CriarCategoriaSchemaTipo } from "@/schema/categorias";
 import { DataToUTCDate } from "@/lib/helpers";
 
 /*
@@ -149,7 +148,7 @@ function DialogoCriarTransacao({trigger, tipo}: Props) {
                             <FormField 
                                 control={form.control}
                                 name="categoria"
-                                render={({ field }) => 
+                                render={({ }) => 
                                     <FormItem className="flex flex-col">
                                         <FormLabel className="mr-2">
                                             Categoria
@@ -173,7 +172,7 @@ function DialogoCriarTransacao({trigger, tipo}: Props) {
                                                 <PopoverTrigger asChild>
                                                     <FormControl>
                                                         <Button variant={"outline"} className="w-[200px] pl-3 text-left font-normal">
-                                                            {field.value ? format(field.value, "PPP", {locale: ptBR}) : <span>"Selecione uma data"</span>}
+                                                            {field.value ? format(field.value, "PPP", {locale: ptBR}) : <span>Selecione uma data</span>}
                                                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
                                                         </Button>
                                                     </FormControl>

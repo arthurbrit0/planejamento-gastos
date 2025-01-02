@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
-import { DeletarCategoriaSchema } from "@/schema/categorias";
 
 export async function GET(request: Request) {   // fazendo uma rota GET para pegar as categorias do usuario logado
     const user = await currentUser();           // pegamos o usuario logado

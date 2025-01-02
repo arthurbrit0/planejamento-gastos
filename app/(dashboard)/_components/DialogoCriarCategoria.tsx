@@ -6,7 +6,7 @@ import React, { ReactNode, useCallback } from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
-import { CircleOff, Divide, Loader2, PlusSquareIcon } from "lucide-react";
+import { CircleOff, Loader2, PlusSquareIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Form, FormControl, FormItem, FormLabel, FormField, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";

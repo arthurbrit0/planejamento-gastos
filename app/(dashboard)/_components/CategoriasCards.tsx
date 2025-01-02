@@ -7,7 +7,7 @@ import { DataToUTCDate, GetFormatterMoeda } from '@/lib/helpers';
 import SkeletonWrapper from '@/components/SkeletonWrapper';
 import { TipoTransacao } from '@/lib/tipos';
 import { GetCategoriasResponseType } from '@/app/api/estatisticas/categorias/route';
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Progress } from '@/components/ui/progress';
 

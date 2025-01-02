@@ -4,7 +4,7 @@ import { ConfiguracoesUser } from '@prisma/client';
 import React, { useCallback, useMemo, useState } from 'react'
 import { Periodo, Calendario } from '@/lib/tipos';
 import { GetFormatterMoeda } from '@/lib/helpers';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import HistoricoPeriodoSelector from './HistoricoPeriodoSelector';
 import { useQuery } from '@tanstack/react-query';
@@ -135,7 +135,7 @@ function CustomTooltip({active, payload, formatter}: any) {
     if(!active || !payload || payload.length===0) return null;
 
     const dados = payload[0].payload;
-    const {entrada, saida, ano, mes, dia} = dados;
+    const {entrada, saida} = dados;
 
     return (
         <div className="min-w-[300px] rounded border bg-background p-4">
